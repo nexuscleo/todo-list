@@ -22,8 +22,13 @@
     --accent-danger-hover: #ee5253;
 }
 
-* {
+*, *::before, *::after {
     box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -36,7 +41,7 @@ body {
     align-items: center; 
     justify-content: center;
     margin: 0;
-    padding: 20px 12px;
+    padding: 16px 12px;
 }
 
 .container {
@@ -44,9 +49,10 @@ body {
     flex-direction: column;
     width: 100%; 
     max-width: 480px;
-    height: 640px;
-    max-height: 86dvh;
-    padding: 24px;
+    height: calc(100dvh - 40px);
+    max-height: 660px;
+    min-height: 460px;
+    padding: 24px 20px;
     background-color: var(--bg-color);
     border-radius: 28px;
     box-shadow: var(--shadow-raised-lg);
@@ -59,30 +65,31 @@ body {
     text-align: center;
     font-size: 1.6rem;
     font-weight: 700;
-    letter-spacing: 1.2px;
-    margin: 0 0 20px 0;
-    padding-right: 40px;
+    letter-spacing: 1px;
+    margin: 0 0 18px 0;
+    padding-right: 44px; /* Space for top-right music button */
     color: var(--text-primary);
     text-shadow: 1px 1px 2px var(--shadow-light), -1px -1px 2px var(--shadow-dark);
 }
 
+/* Grid Layout for Input + Action Buttons */
 .input-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px; 
     margin-bottom: 20px;
     width: 100%;
 }
 
 #task-input {
+    grid-column: 1 / -1;
     width: 100%;
-    flex: 1 1 100%;
     color: var(--text-primary);
     border: none; 
     border-radius: 16px;
     font-size: 15px;
     font-family: inherit;
-    padding: 14px 18px;
+    padding: 14px 16px;
     background-color: var(--bg-color);
     box-shadow: var(--shadow-inset);
     outline: none;
@@ -99,9 +106,8 @@ body {
 }
 
 .action-button {
-    flex: 1 1 calc(50% - 6px);
-    min-width: 0;
-    padding: 14px 12px;
+    width: 100%;
+    padding: 13px 10px;
     border: none; 
     background-color: var(--bg-color); 
     border-radius: 16px;
@@ -112,10 +118,12 @@ body {
     text-align: center;
     box-shadow: var(--shadow-raised-sm);
     transition: all 0.2s ease;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .action-button:hover {
@@ -129,21 +137,23 @@ body {
 }
 
 #add-button {
+    grid-column: 1 / 2;
     color: var(--accent-purple);
 }
 
 #clear-button {
+    grid-column: 2 / 3;
     color: var(--accent-danger);
 }
 
 #task-list {
-    flex-grow: 1; 
+    flex: 1 1 auto; 
     overflow-y: auto; 
-    padding: 4px 6px 4px 2px; 
-    margin-right: -4px;
+    padding: 4px 4px 4px 2px; 
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-height: 0; /* Prevents overflow inside flex container */
 }
 
 .task-item {
@@ -151,10 +161,10 @@ body {
     justify-content: space-between; 
     align-items: center;
     background-color: var(--bg-color);
-    padding: 14px 16px;
-    border-radius: 18px;
+    padding: 12px 14px;
+    border-radius: 16px;
     color: var(--text-primary);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     box-shadow: var(--shadow-raised-sm);
     transition: all 0.3s ease; 
@@ -163,7 +173,7 @@ body {
 }
 
 .task-item:hover {
-    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
 }
 
 .task-item.new {
@@ -171,14 +181,15 @@ body {
 }
 
 .task-item .task-text {
-    flex-grow: 1; 
+    flex: 1 1 auto; 
     min-width: 0;
     margin: 0 4px;
     word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .task-item .task-timestamp {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
     white-space: nowrap; 
     flex-shrink: 0;
@@ -189,9 +200,10 @@ body {
     background: var(--bg-color);
     border: none;
     color: var(--accent-danger);
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -203,7 +215,7 @@ body {
 
 .delete-button:hover:not(:disabled) {
     transform: scale(1.05);
-    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+    box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
 }
 
 .delete-button:active:not(:disabled) {
@@ -221,7 +233,7 @@ body {
 .check-icon {
     color: var(--text-muted);
     cursor: pointer;
-    font-size: 24px; 
+    font-size: 22px; 
     transition: all 0.3s ease;
     user-select: none;
     flex-shrink: 0;
@@ -248,7 +260,7 @@ body {
 
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -270,7 +282,7 @@ body {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-12px) scale(0.97);
+        transform: translateY(-10px) scale(0.97);
     }
     to {
         opacity: 1;
@@ -283,8 +295,8 @@ footer {
     width: 100%;
     max-width: 480px;
     text-align: center;
-    padding: 16px 0 8px 0; 
-    font-size: 13px;
+    padding: 12px 0 4px 0; 
+    font-size: 12px;
     font-weight: 500;
 }
 
@@ -293,15 +305,15 @@ footer {
     align-items: center;
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 18px;
     z-index: 5; 
 }
 
 .music-button {
     background: var(--bg-color);
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     color: var(--accent-purple);
     cursor: pointer;
@@ -314,7 +326,7 @@ footer {
 
 .music-button:hover {
     transform: scale(1.08);
-    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+    box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
 }
 
 .music-button:active {
@@ -325,69 +337,80 @@ footer {
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 600px) {
     body {
-        padding: 12px 8px;
+        padding: 8px 6px;
         justify-content: flex-start;
     }
 
     .container {
         width: 100%; 
-        height: auto; 
-        max-height: 88dvh;
-        padding: 20px 16px;
-        border-radius: 24px;
+        height: calc(100dvh - 36px);
+        max-height: none;
+        padding: 18px 14px;
+        border-radius: 20px;
     }
 
     .container h1 {
-        font-size: 1.4rem;
-        margin-bottom: 16px;
+        font-size: 1.3rem;
+        margin-bottom: 14px;
     }
 
     .music-controls {
-        top: 16px;
-        right: 16px;
+        top: 14px;
+        right: 14px;
     }
 
     .music-button {
-        width: 36px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
     }
 
     .input-container {
-        gap: 10px;
-        margin-bottom: 16px;
+        gap: 8px;
+        margin-bottom: 14px;
     }
 
     #task-input {
-        padding: 12px 14px;
+        padding: 11px 13px;
         font-size: 14px;
     }
 
     .action-button {
-        padding: 12px 10px;
+        padding: 11px 8px;
         font-size: 13px;
     }
 
     .task-item {
         font-size: 13px;
-        padding: 12px 10px;
+        padding: 10px 10px;
         gap: 6px;
     }
 
     .task-item .task-timestamp {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .delete-button {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
     }
 
     .check-icon {
-        font-size: 20px;
+        font-size: 19px;
+    }
+}
+
+/* Extra small devices (e.g. 360px and below) */
+@media (max-width: 380px) {
+    .container {
+        padding: 14px 10px;
     }
 
-    footer {
-        font-size: 12px;
-        padding: 12px 0 4px 0;
+    .input-container {
+        grid-template-columns: 1fr;
+    }
+
+    #add-button, #clear-button {
+        grid-column: 1 / -1;
     }
 }
