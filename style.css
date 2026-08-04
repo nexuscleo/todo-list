@@ -30,13 +30,13 @@ body {
     background-color: var(--bg-color);
     font-family: 'Poppins', sans-serif;
     color: var(--text-primary);
-    min-height: 100vh; 
+    min-height: 100dvh; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     justify-content: center;
     margin: 0;
-    padding: 20px;
+    padding: 20px 15px;
 }
 
 .container {
@@ -45,6 +45,7 @@ body {
     width: 100%; 
     max-width: 520px;
     height: 640px;
+    max-height: 88dvh;
     padding: 30px;
     background-color: var(--bg-color);
     border-radius: 28px;
@@ -59,6 +60,7 @@ body {
     font-weight: 700;
     letter-spacing: 1.5px;
     margin: 0 0 24px 0;
+    padding-right: 40px;
     color: var(--text-primary);
     text-shadow: 1px 1px 2px var(--shadow-light), -1px -1px 2px var(--shadow-dark);
 }
@@ -73,6 +75,7 @@ body {
 
 #task-input {
     flex-grow: 1; 
+    min-width: 0;
     color: var(--text-primary);
     border: none; 
     border-radius: 16px;
@@ -95,7 +98,7 @@ body {
 }
 
 .action-button {
-    padding: 12px 18px;
+    padding: 14px 18px;
     border: none; 
     background-color: var(--bg-color); 
     border-radius: 16px;
@@ -109,7 +112,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    white-space: nowrap;
 }
 
 .action-button:hover {
@@ -145,13 +148,14 @@ body {
     justify-content: space-between; 
     align-items: center;
     background-color: var(--bg-color);
-    padding: 14px 18px;
+    padding: 14px 16px;
     border-radius: 18px;
     color: var(--text-primary);
     font-size: 15px;
     font-weight: 500;
     box-shadow: var(--shadow-raised-sm);
     transition: all 0.3s ease; 
+    gap: 8px;
 }
 
 .task-item:hover {
@@ -164,7 +168,8 @@ body {
 
 .task-item .task-text {
     flex-grow: 1; 
-    margin: 0 10px;
+    min-width: 0;
+    margin: 0 4px;
     word-break: break-word;
 }
 
@@ -172,7 +177,7 @@ body {
     font-size: 12px;
     color: var(--text-secondary);
     white-space: nowrap; 
-    margin-right: 12px;
+    flex-shrink: 0;
     font-weight: 400;
 }
 
@@ -189,6 +194,7 @@ body {
     justify-content: center;
     box-shadow: var(--shadow-raised-sm);
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .delete-button:hover:not(:disabled) {
@@ -202,7 +208,7 @@ body {
 }
 
 .delete-button:disabled {
-    opacity: 0.4;
+    opacity: 0.35;
     cursor: not-allowed;
     box-shadow: none;
     background: transparent;
@@ -211,10 +217,10 @@ body {
 .check-icon {
     color: var(--text-muted);
     cursor: pointer;
-    margin-right: 8px;
     font-size: 24px; 
     transition: all 0.3s ease;
     user-select: none;
+    flex-shrink: 0;
 }
 
 .check-icon:hover {
@@ -238,7 +244,7 @@ body {
 
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -273,7 +279,7 @@ footer {
     width: 100%;
     max-width: 520px;
     text-align: center;
-    padding: 20px 0 0 0; 
+    padding: 16px 0 8px 0; 
     font-size: 13px;
     font-weight: 500;
 }
@@ -282,16 +288,16 @@ footer {
     display: flex;
     align-items: center;
     position: absolute;
-    bottom: 24px;
+    top: 24px;
     right: 24px;
-    z-index: 2; 
+    z-index: 5; 
 }
 
 .music-button {
     background: var(--bg-color);
     border: none;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     color: var(--accent-purple);
     cursor: pointer;
@@ -304,7 +310,7 @@ footer {
 
 .music-button:hover {
     transform: scale(1.08);
-    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
 }
 
 .music-button:active {
@@ -312,35 +318,77 @@ footer {
     box-shadow: var(--shadow-inset-sm);
 }
 
+/* Media Queries for Mobile Responsiveness */
 @media (max-width: 600px) {
     body {
-        padding: 10px;
+        padding: 10px 8px;
+        justify-content: flex-start;
     }
 
     .container {
         width: 100%; 
-        height: 90vh; 
-        max-height: 700px;
-        padding: 20px 16px;
-        border-radius: 20px;
+        height: auto; 
+        max-height: 85dvh;
+        padding: 20px 14px;
+        border-radius: 22px;
+    }
+
+    .container h1 {
+        font-size: 1.4rem;
+        margin-bottom: 18px;
+        text-align: left;
+        padding-left: 4px;
+    }
+
+    .music-controls {
+        top: 16px;
+        right: 14px;
+    }
+
+    .music-button {
+        width: 36px;
+        height: 36px;
     }
 
     .input-container {
-        gap: 8px;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
     }
 
     #task-input {
-        padding: 12px 14px;
+        width: 100%;
         font-size: 14px;
+        padding: 12px 14px;
     }
 
     .action-button {
-        padding: 10px 12px;
+        flex: 1;
+        padding: 12px;
         font-size: 13px;
     }
 
     .task-item {
-        font-size: 14px;
-        padding: 12px 14px;
+        font-size: 13px;
+        padding: 12px 10px;
+        gap: 6px;
+    }
+
+    .task-item .task-timestamp {
+        font-size: 11px;
+    }
+
+    .delete-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .check-icon {
+        font-size: 20px;
+    }
+
+    footer {
+        font-size: 12px;
+        padding: 12px 0;
     }
 }
